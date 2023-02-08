@@ -22,4 +22,14 @@ class Order extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function owner()
+    {
+        return User::findOrFail($this->user_id);
+    }
+
+    public function pay()
+    {
+        return number_format($this->price_total / ($this->users->count() + 1), 2, '.', "");;
+    }
 }

@@ -34,6 +34,9 @@
                         @foreach($order->users()->get() as $user)
                             {{ $user->email }},
                         @endforeach
+                        @foreach($users as $user)
+                            <a class="btn btn-outline-secondary" href="/invite/{{ $order->id }}/add/{{ $user->id }}">{{ $user->email }}</a>
+                        @endforeach
                     </div>
                 </div>
             </div>

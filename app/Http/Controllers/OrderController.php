@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Cart;
+use App\Models\Invite;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -13,13 +16,18 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::where('user_id', auth()->user()->id)->get();
-        return view('orders/index', compact('orders'));
+        $result = DB::table('order_user')->where('user_id', auth()->user()->id)->get();
+        $sorders = [];
+        foreach($result as $res)
+            $sorders[] = Order::findOrFail($res->order_id);;
+        return view('orders/index', compact('orders','sorders'));
     }
 
     public function adduser($id)
     {
         $order = Order::findOrFail($id);
-        return view('orders/adduser', compact('order'));
+        $users = User::all();
+        return view('orders/adduser', compact('order','users'));
     }
 
     public function create()

@@ -61,6 +61,7 @@
                                     
                                     <a class="dropdown-item" href="/orders">My Orders</a>
                                     <a class="dropdown-item" href="/cart">Cart</a>
+                                    <a class="dropdown-item" href="/invites">Invites</a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
