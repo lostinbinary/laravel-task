@@ -17,11 +17,8 @@ class CartController extends Controller
 
     public function index()
     {
-        $carts = Cart::where('user_id',auth()->user()->id)->get('id');
-        $products = [];
-        foreach($carts as $cart)
-            $products[] = Product::findOrFail($cart->id);
-        return view('cart', compact('products'));
+        $carts = Cart::where('user_id',auth()->user()->id)->get();
+        return view('cart', compact('carts'));
     }
 
     public function add(Product $product)

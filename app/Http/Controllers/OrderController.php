@@ -15,12 +15,14 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::where('user_id', auth()->user()->id)->get();
+        $orders = Order::where('user_id', auth()->user()->id)->orderByDesc('id')->get();
+        
         $result = DB::table('order_user')->where('user_id', auth()->user()->id)->get();
-        $sorders = [];
+        if(!$orders->count()) $orders = [];
         foreach($result as $res)
-            $sorders[] = Order::findOrFail($res->order_id);;
-        return view('orders/index', compact('orders','sorders'));
+            $orders[] = Order::findOrFail($res->order_id);
+            
+        return view('orders/index', compact('orders'));
     }
 
     public function adduser($id)
@@ -38,8 +40,8 @@ class OrderController extends Controller
 
         $carts = Cart::where('user_id', auth()->user()->id)->get();
         foreach($carts as $cart) {
-            $product = Product::findOrFail($cart->product_id);
-            $order->price_total += $product->price;
+            $order->price_total += $cart->product()->price;
+            $cart->delete();
         }
 
         $order->pay_deadline = date('Y-m-d');

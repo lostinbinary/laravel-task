@@ -32,3 +32,5 @@ Route::get('/cart/add/{product}', [App\Http\Controllers\CartController::class, '
 Route::get('/invites', [App\Http\Controllers\InviteController::class, 'index']);
 Route::get('/invite/{order_id}/add/{user_id}', [App\Http\Controllers\InviteController::class, 'create']);
 Route::get('/invite/{invite_id}/accept/{status}', [App\Http\Controllers\InviteController::class, 'accept']);
+
+Route::get('/pay/{order_id}/{price}', [App\Http\Controllers\PaymentController::class, 'pay']);

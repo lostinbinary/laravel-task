@@ -37,7 +37,8 @@ class InviteController extends Controller
                 'user_id' => auth()->user()->id
             ]);
         }
+        $invite->delete();
 
-        return back();
+        return redirect('/orders');
     }
 }
